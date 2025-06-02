@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { redirect } from "next/navigation";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { useAuthStore } from "@/store/use-session";
 
 type LoginFormValues = {
   email: string;
@@ -28,6 +29,7 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+  const { setSession } = useAuthStore((state) => state);
   const {
     register,
     handleSubmit,
@@ -36,7 +38,8 @@ export function LoginForm({
   const [togglePassword, setTogglePassword] = useState(false);
   const { mutateAsync: handleLogin, isPending } = useMutation({
     mutationFn: login,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setSession(data.data);
       toast.success("Logged in");
       redirect("/dashboard");
     },

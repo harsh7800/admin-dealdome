@@ -7,7 +7,6 @@ export const getCategories = async () => {
 };
 
 export const deleteCategory = async (id: string) => {
-  console.log("id: ", id);
   const response = await axiosInstance.delete(`/categories/${id}`);
   return response.data;
 };

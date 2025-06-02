@@ -8,17 +8,18 @@ import { useMemo } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { useParams } from "next/navigation";
 
 export default function CategoriesTable() {
+  const { id } = useParams(); // Assuming you have a way to get the current ID, e.g., from URL params
   const queryClient = useQueryClient();
 
   const {
     data: categories,
     isLoading,
     error,
-    refetch,
   } = useQuery({
-    queryKey: ["categories"],
+    queryKey: ["categories", id],
     queryFn: getCategories,
     staleTime: 0,
   });
@@ -26,13 +27,11 @@ export default function CategoriesTable() {
   const { mutate: handleDelete } = useMutation({
     mutationFn: deleteCategory,
     onSuccess: () => {
-      refetch();
       toast.success("Category deleted successfully");
       queryClient.invalidateQueries({
         queryKey: ["categories"],
         refetchType: "active", // forces immediate refetch of active queries
       });
-      queryClient.refetchQueries({ queryKey: ["categories"] }); // force refetch
     },
   });
 

@@ -52,6 +52,7 @@ const fieldTypes = [
 
 export default function AddCategoryForm() {
   const { id } = useParams();
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -89,8 +90,6 @@ export default function AddCategoryForm() {
   //   control,
   //   name: "brands",
   // });
-
-  const queryClient = useQueryClient();
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: createCategory,
@@ -254,7 +253,7 @@ export default function AddCategoryForm() {
               <Card key={field.id} className="p-4">
                 <div className="flex items-center justify-between mb-4">
                   <h4 className="font-medium">Field {index + 1}</h4>
-                  {fieldArray.length > 1 && (
+                  {fieldArray.length >= 1 && (
                     <Button
                       type="button"
                       icon={<Trash2 className="w-4 h-4" />}

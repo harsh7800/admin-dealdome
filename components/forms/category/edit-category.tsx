@@ -194,6 +194,19 @@ export default function EditCategoryForm() {
                   <p className="text-sm text-red-500">{errors.name.message}</p>
                 )}
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="name">Description</Label>
+                <Input
+                  id="desc"
+                  {...register("desc")}
+                  placeholder="Enter description"
+                />
+                {errors.name && (
+                  <p className="text-sm text-red-500">
+                    {errors?.desc?.message}
+                  </p>
+                )}
+              </div>
             </div>
 
             <Separator />
