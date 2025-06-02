@@ -29,10 +29,8 @@ const fieldSchema = z
     optionalMapOfArray: z.array(z.string()).optional(),
     isOptional: z.boolean().optional(),
     secureInput: z.boolean().optional(),
-    isSecure: z.boolean().optional(),
-    requires: z.boolean().optional().nullable(),
+    required: z.boolean().optional().nullable(),
     dependsOn: z.string().optional().nullable(),
-    singleImage: z.boolean().optional(),
     min: z.number().transform((val) => (val === null ? 0 : val)),
     max: z.number().transform((val) => (val === null ? 100 : val)),
   })

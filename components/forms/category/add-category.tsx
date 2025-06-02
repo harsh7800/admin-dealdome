@@ -116,8 +116,7 @@ export default function AddCategoryForm() {
       default: "",
       isOptional: false,
       secureInput: false,
-      isSecure: false,
-      requires: false,
+      required: false,
       dependsOn: "",
       min: 0,
       max: 100,
@@ -387,22 +386,7 @@ export default function AddCategoryForm() {
 
                   <div className="flex items-center space-x-2">
                     <Controller
-                      name={`fields.${index}.isSecure`}
-                      control={control}
-                      render={({ field }) => (
-                        <Checkbox
-                          id={`is-secure-${index}`}
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      )}
-                    />
-                    <Label htmlFor={`is-secure-${index}`}>Is Secure</Label>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
-                    <Controller
-                      name={`fields.${index}.requires`}
+                      name={`fields.${index}.required`}
                       control={control}
                       render={({ field }) => (
                         <Checkbox
@@ -413,23 +397,6 @@ export default function AddCategoryForm() {
                       )}
                     />
                     <Label htmlFor={`requires-${index}`}>Required</Label>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
-                    <Controller
-                      name={`fields.${index}.singleImage`}
-                      control={control}
-                      render={({ field }) => (
-                        <Checkbox
-                          id={`single-image-${index}`}
-                          checked={field.value || false}
-                          onCheckedChange={field.onChange}
-                        />
-                      )}
-                    />
-                    <Label htmlFor={`single-image-${index}`}>
-                      Single Image
-                    </Label>
                   </div>
                 </div>
               </Card>
