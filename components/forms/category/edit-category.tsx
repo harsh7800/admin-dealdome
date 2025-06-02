@@ -28,6 +28,7 @@ import { getCategoryById, updateCategory } from "@/app/api/categories";
 import { toast } from "sonner";
 import { redirect, useParams } from "next/navigation";
 import { useEffect } from "react";
+import { Field } from "@/interfaces/category";
 
 const fieldTypes = [
   "searchableDropdown",
@@ -91,7 +92,12 @@ export default function EditCategoryForm() {
         mobileImage: categories.mobileImage || null,
         bgColor: categories.bgColor || null,
         parentID: categories.parentID || null,
-        fields: categories.fields || [],
+        fields:
+          categories.fields?.map((field: Field) => ({
+            ...field,
+            min: field.min ?? 0,
+            max: field.max ?? 100,
+          })) || [],
       });
     }
   }, [categories, reset]);
@@ -120,7 +126,7 @@ export default function EditCategoryForm() {
     mutationFn: ({ id, data }: { id: string; data: CategoryFormData }) =>
       updateCategory(id, data),
     onSuccess: () => {
-      toast.success("Category created successfully!");
+      toast.success("Category edited successfully!");
       queryClient.invalidateQueries({ queryKey: ["categories"] });
       redirect("/categories");
     },
@@ -510,14 +516,24 @@ export default function EditCategoryForm() {
           </CardContent>
         </Card> */}
 
-        <div className="flex justify-end">
+        <div className="flex justify-end gap-3  ">
+          <Button
+            variant={"outline"}
+            onClick={() => redirect("/categories")}
+            type="button"
+            size="lg"
+            isLoading={isPending}
+            disabled={isPending}
+          >
+            Cancel
+          </Button>
           <Button
             type="submit"
             size="lg"
             isLoading={isPending}
             disabled={isPending}
           >
-            Create Category
+            Save Category
           </Button>
         </div>
       </form>

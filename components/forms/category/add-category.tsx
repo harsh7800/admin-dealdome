@@ -474,7 +474,17 @@ export default function AddCategoryForm() {
           </CardContent>
         </Card> */}
 
-        <div className="flex justify-end">
+        <div className="flex justify-end gap-3">
+          <Button
+            variant={"outline"}
+            onClick={() => redirect("/categories")}
+            type="button"
+            size="lg"
+            isLoading={isPending}
+            disabled={isPending}
+          >
+            Cancel
+          </Button>
           <Button
             type="submit"
             size="lg"
