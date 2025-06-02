@@ -7,6 +7,7 @@ import { columns as rawColumns } from "@/components/columns/category";
 import { useMemo } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export default function CategoriesTable() {
   const queryClient = useQueryClient();
@@ -15,15 +16,23 @@ export default function CategoriesTable() {
     data: categories,
     isLoading,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
+    staleTime: 0,
   });
 
   const { mutate: handleDelete } = useMutation({
     mutationFn: deleteCategory,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      refetch();
+      toast.success("Category deleted successfully");
+      queryClient.invalidateQueries({
+        queryKey: ["categories"],
+        refetchType: "active", // forces immediate refetch of active queries
+      });
+      queryClient.refetchQueries({ queryKey: ["categories"] }); // force refetch
     },
   });
 
@@ -37,7 +46,7 @@ export default function CategoriesTable() {
     <div className="p-4 w-full">
       <div className="w-full flex items-center justify-end mb-4">
         <Button asChild variant="default">
-          <Link href={"/categories/new-category"} className="text-sm">
+          <Link href={"/categories/new"} className="text-sm">
             Add New Category
           </Link>
         </Button>
